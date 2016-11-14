@@ -1,0 +1,14 @@
+{
+  "name": "vue-inview",
+  "version": "0.0.1",
+  "description": "Event that fired as soon as element appears in the user's viewport.",
+  "main": "src/vue-inview.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "shunsuke maeda <duck8823@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.1.1"
+  }
+}
