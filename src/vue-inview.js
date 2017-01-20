@@ -10,7 +10,8 @@ InView.install = function (Vue) {
 			setTimeout( function() {
 				var fn = binding.value;
 				var pos = $(el).offset().top - $(window).height();
-				if ($(window).scrollTop() > pos) {
+				var onloaded = el.getAttribute('data-on-loaded') == null ? true : el.getAttribute('data-on-loaded');
+				if (onloaded == true && $(window).scrollTop() > pos) {
 					fn();
 					if (binding.arg !== 'each') {
 						return;
