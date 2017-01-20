@@ -3,32 +3,37 @@ var $ = require('jquery');
 var InView = {};
 InView.install = function (Vue) {
 	Vue.directive('inview', {
-
 		bind: function (el, binding, vnode) {
 			if (typeof binding.value !== 'function') {
 				console.warn('[vue-inview] invalid value.')
 			}
-			var key = Math.random().toString(36).slice(-8);
-			var id = Math.random().toString(36).slice(-64);
-			el.setAttribute('data-inview-' + key, id);
 			setTimeout( function() {
-				var elem = document.querySelector("[data-inview-" + key + "='" + id + "']");
-				el.removeAttribute('data-inview-id');
-
 				var fn = binding.value;
-				var pos = $(elem).offset().top - $(window).height();
+				var pos = $(el).offset().top - $(window).height();
 				if ($(window).scrollTop() > pos) {
 					fn();
-				} else {
-					var callback = function () {
-						var pos = $(elem).offset().top - $(window).height();
-						if ($(window).scrollTop() > pos) {
-							fn();
-							$(window).unbind("scroll", callback);
-						}
-					};
-					$(window).bind("scroll", callback);
+					if (binding.arg !== 'each') {
+						return;
+					}
 				}
+				var scrollable = el.getAttribute('data-scrollable') ? el.getAttribute('data-scrollable') : window;
+				var callback = function () {
+					var pos = $(el).offset().top - $(window).height();
+					if ($(window).scrollTop() > pos) {
+						fn();
+						$(scrollable).unbind("scroll", callback);
+						if (binding.arg === 'each' ) {
+							// rebind
+							$(scrollable).bind("scroll", function() {
+								var pos = $(el).offset().top - $(window).height();
+								if ($(window).scrollTop() <= pos) {
+									$(scrollable).bind("scroll", callback);
+								}
+							});
+						}
+					}
+				};
+				$(scrollable).bind("scroll", callback);
 			}, 5);
 		}
 	});
