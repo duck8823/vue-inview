@@ -15,7 +15,7 @@ npm install --save https://github.com/duck8823/vue-inview.git
 </div>
 ```
 ```js
-import InView from 'vue-inview';
+import InView from 'v-inview';
 Vue.use(InView);
 new Vue({
     data: {
