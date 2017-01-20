@@ -9,13 +9,13 @@ npm install --save https://github.com/duck8823/vue-inview.git
 ## Synopsis
 ```html
 <div id="app">
-    <div vue-inview="hoge">
+    <div v-inview="hoge">
         {{ fuga }}
     </div>
 </div>
 ```
 ```js
-import InView from 'v-inview';
+import InView from 'vue-inview';
 Vue.use(InView);
 new Vue({
     data: {
@@ -34,5 +34,5 @@ new Vue({
             console.log('inview');
         }
     }
-}).$mount('$app');
+}).$mount('#app');
 ```
